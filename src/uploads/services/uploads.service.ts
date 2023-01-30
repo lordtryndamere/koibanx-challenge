@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Readable } from 'stream';
+
 import {
   EXCEL_UPLOADS_AMQ,
   IntegrationEventSubject,
