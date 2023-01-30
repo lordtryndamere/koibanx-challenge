@@ -14,7 +14,7 @@ RUN du -sh ./node_modules/* | sort -nr | grep '\dM.*'
 
 FROM node:16.13.0-alpine
 
-WORKDIR /app-producer
+WORKDIR /app-consumer
 COPY --from=builder /build/dist ./dist
 COPY --from=builder /build/package.json .
 COPY --from=builder /build/node_modules ./node_modules

@@ -17,4 +17,7 @@ export class UploadsRepositoryImpl implements UploadsRepository {
     const record = createTransaction.save();
     return (await record)._id;
   }
+  async getTransaction(idTransaction: string) {
+    return this.transactionModel.findById({ id: idTransaction });
+  }
 }

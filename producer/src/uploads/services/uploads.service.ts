@@ -9,6 +9,7 @@ import {
   UPLOADS_REPOSITORY,
 } from '../constants/constants';
 import {
+  DATA_IS_EMPTY,
   FILE_XLSX_IS_REQUIRED,
   INVALID_ENDWITH_FORMAT,
   INVALID_FORMAT_MAPPER,
@@ -94,8 +95,9 @@ export class UploadsServiceImpl implements UploadsService {
       };
       const idTransaction = await this.repository.save(newTransaction);
       const data = await this.proccessExcelFile(file.buffer, format);
+      if (data.length == 0) throw DATA_IS_EMPTY;
       await this.publishAMQData(data, idTransaction);
-      return idTransaction;
+      return { idTransaction };
     } catch (error) {
       throw new HttpException(
         new ErrorResponseDTO(
@@ -105,5 +107,8 @@ export class UploadsServiceImpl implements UploadsService {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+  async getTransaction(idTransaction: string): Promise<any> {
+    return await this.repository.getTransaction(idTransaction);
   }
 }

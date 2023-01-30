@@ -18,3 +18,8 @@ export const FILE_XLSX_IS_REQUIRED = new GenericResponseDto(
   4,
   'the file xlsx is required, please try again',
 );
+
+export const DATA_IS_EMPTY = new GenericResponseDto(
+  5,
+  'the file xlsx is empty',
+);

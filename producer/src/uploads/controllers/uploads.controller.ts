@@ -25,8 +25,8 @@ export class UploadsControllerImpl implements UploadsController {
   async upload(@UploadedFile() file, @Body() formatMapper: any): Promise<any> {
     return await this.uploadService.upload(file, formatMapper);
   }
-  //   @Get('/:idTransaction')
-  //   async get(@Param('idTransaction') idTransaction: string): Promise<any> {
-  //     await this.uploadService.get(idTransaction);
-  //   }
+  @Get('/:idTransaction')
+  async get(@Param('idTransaction') idTransaction: string): Promise<any> {
+    await this.uploadService.getTransaction(idTransaction);
+  }
 }
