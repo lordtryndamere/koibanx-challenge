@@ -1,3 +1,3 @@
 export interface UploadsService {
-  upload(): void;
+  upload(file: any, format: any): Promise<any>;
 }

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
+
 import * as bodyParser from 'body-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -9,10 +9,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   // nestjs-pino
-  app.useLogger(app.get(Logger));
-  app.useGlobalInterceptors(new LoggerErrorInterceptor());
+  //  app.useLogger(app.get(Logger));
+  //app.useGlobalInterceptors(new LoggerErrorInterceptor());
   app.use(bodyParser.json({ limit: '1mb' }));
-  app.setGlobalPrefix('/uploads/v1.0');
+  app.setGlobalPrefix('/koibanx/v1.0');
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -21,10 +21,9 @@ async function bootstrap() {
     }),
   );
   const PORT = app.get(ConfigService).get<number>('PORT') || 3000;
-  const URI = app.get(ConfigService).get<string>('DB_URI');
 
   await app.listen(PORT, () => {
-    app.get(Logger).log(`Server successfully running on port ${PORT}`);
+    console.info(`Server successfully running on port ${PORT}`);
   });
 }
 bootstrap();

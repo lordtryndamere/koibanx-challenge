@@ -1,6 +1,6 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { EXCEL_UPLOADS_AMQ } from '../constants/constants';
+import { CLIENT_PROXY_EXCEL_UPLOAD } from '../constants/constants';
 import {
   IntegrationEvent,
   IntegrationEventPublisher,
@@ -8,7 +8,9 @@ import {
 
 @Injectable()
 export class AMQEventPublisherImplement implements IntegrationEventPublisher {
-  constructor(@Inject(EXCEL_UPLOADS_AMQ) private readonly client: ClientProxy) {
+  constructor(
+    @Inject(CLIENT_PROXY_EXCEL_UPLOAD) private readonly client: ClientProxy,
+  ) {
     this.connect();
   }
 

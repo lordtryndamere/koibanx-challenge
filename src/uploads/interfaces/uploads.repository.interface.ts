@@ -1,3 +1,5 @@
+import { CreateTransactionDto } from '../dtos/create-transaction.dto';
+
 export interface UploadsRepository {
-  upload(): void;
+  save(createTransactionDto: CreateTransactionDto): Promise<string>;
 }

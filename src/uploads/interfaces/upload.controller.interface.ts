@@ -1,3 +1,3 @@
 export interface UploadsController {
-  upload(): void;
+  upload(file: any, formatMapper: any): Promise<any>;
 }
