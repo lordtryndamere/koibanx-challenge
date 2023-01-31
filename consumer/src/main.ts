@@ -10,7 +10,6 @@ async function bootstrap() {
       options: {
         urls: ['amqp://guest:guest@localhost:5672/'],
         queue: 'excel-queue',
-
         queueOptions: {
           durable: false,
         },

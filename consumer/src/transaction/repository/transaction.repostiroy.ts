@@ -21,13 +21,16 @@ export class TransactionRepository {
     try {
       await this.dynamicModel.insertMany(data);
     } catch (error) {
+      console.log(error);
+
       throw error;
     }
   }
+
   async update(idTransaction: string, state: States) {
     try {
       const updated = await this.transactionModel.findOneAndUpdate(
-        { id: idTransaction },
+        { _id: idTransaction },
         { state: state },
         { new: true },
       );
