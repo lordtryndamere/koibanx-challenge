@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { TRANSACTION_MODEL } from '../constants/constants';
+import { States, TRANSACTION_MODEL } from '../constants/constants';
 import { CreateTransactionDto } from '../dtos/create-transaction.dto';
 import { Transaction } from '../interfaces/transaction.interface';
 import { UploadsRepository } from '../interfaces/uploads.repository.interface';
@@ -19,5 +19,18 @@ export class UploadsRepositoryImpl implements UploadsRepository {
   }
   async getTransaction(idTransaction: string) {
     return this.transactionModel.findById({ id: idTransaction });
+  }
+
+  async update(idTransaction: string, state: States) {
+    try {
+      const updated = await this.transactionModel.findOneAndUpdate(
+        { _id: idTransaction },
+        { state: state },
+        { new: true },
+      );
+      console.info('TRANSACTION UPDATE SUCCESFULLY', updated);
+    } catch (error) {
+      throw error;
+    }
   }
 }
