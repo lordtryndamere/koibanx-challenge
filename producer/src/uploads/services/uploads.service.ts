@@ -21,6 +21,7 @@ import * as Excel from 'exceljs';
 import { UploadsRepository } from '../interfaces/uploads.repository.interface';
 import { CreateTransactionDto } from '../dtos/create-transaction.dto';
 import * as _ from 'lodash';
+import { ResponseEventDto } from '../dtos/response-event.dto';
 
 @Injectable()
 export class UploadsServiceImpl implements UploadsService {
@@ -74,12 +75,17 @@ export class UploadsServiceImpl implements UploadsService {
     }
   }
   async publishAMQData(data: Array<any>, idTransaction: string) {
-    await this.publisheramq.publish({
+    const event = await this.publisheramq.publish({
       subject: IntegrationEventSubject.EXCEL_UPLOAD,
       data: {
         idTransaction,
         data: JSON.stringify({ data }),
       },
+    });
+    event.subscribe(async (response: ResponseEventDto) => {
+      if (response.code === 200) {
+        await this.repository.update(response.idTransaction, States.DONE);
+      }
     });
   }
   async upload(file: any, format: any): Promise<any> {
